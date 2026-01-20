@@ -1,3 +1,6 @@
+// Import types.ts to ensure module augmentation is processed
+import './types';
+
 export { DictateInput } from './DictateInput';
 export { DictateTextarea } from './DictateTextarea';
 export { useDictateButton } from './useDictateButton';

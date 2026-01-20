@@ -48,12 +48,7 @@ function MyForm() {
 
 ## Why This Integration Layer?
 
-The dictate-button package includes inject scripts that scan the DOM using `querySelectorAll` and mutate it by wrapping elements. This approach:
-
-- ❌ Conflicts with React's virtual DOM
-- ❌ Doesn't work with ShadCN's declarative patterns
-- ❌ Can't be easily controlled or customized
-- ❌ Doesn't support TypeScript properly
+The [dictate-button](https://github.com/dictate-button/dictate-button) package includes inject scripts that scan the DOM using `querySelectorAll` and mutate it by wrapping elements.
 
 This integration layer provides:
 

@@ -1,3 +1,4 @@
+import 'dictate-button';
 import { useEffect, useRef, useCallback } from 'react';
 import type {
   DictateButtonElement,
