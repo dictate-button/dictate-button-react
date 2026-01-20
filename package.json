@@ -1,6 +1,6 @@
 {
   "name": "@dictate-button/react",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "React text fields with Dictate Button integrated",
   "author": "Dictate Button Team",
   "license": "Apache-2.0",
