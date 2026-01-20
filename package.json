@@ -1,7 +1,7 @@
 {
   "name": "@dictate-button/react",
   "version": "0.0.1",
-  "description": "React components with Dictate Button integrated - ShadCN compatible, no DOM scanning or mutation",
+  "description": "React text field components with Dictate Button integrated",
   "type": "module",
   "main": "./dist/index.js",
   "module": "./dist/index.js",

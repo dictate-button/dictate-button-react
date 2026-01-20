@@ -2,9 +2,9 @@
 
 [![Tests](https://github.com/dictate-button/dictate-button-react/actions/workflows/test.yml/badge.svg)](https://github.com/dictate-button/dictate-button-react/actions/workflows/test.yml)
 
-ShadCN-compatible React components with speech-to-text dictation powered by [Dictate Button](https://github.com/dictate-button/dictate-button).
+React text field components with speech-to-text dictation powered by [Dictate Button](https://github.com/dictate-button/dictate-button).
 
-This package provides a thin integration layer that avoids DOM scanning and mutation, making it fully compatible with React, ShadCN, and other modern component libraries.
+Provides a thin integration layer that avoids DOM scanning and mutation, making it fully compatible with React, ShadCN, and other modern component libraries.
 
 ## Features
 
