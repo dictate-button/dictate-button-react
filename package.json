@@ -1,13 +1,56 @@
 {
   "name": "@dictate-button/react",
   "version": "0.0.1",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "description": "React components with Dictate Button integrated - ShadCN compatible, no DOM scanning or mutation",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
   },
-  "keywords": [],
-  "author": "",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc && vite build",
+    "dev": "vite build --watch",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "keywords": [
+    "react",
+    "dictate",
+    "speech-to-text",
+    "shadcn",
+    "dictate-button",
+    "voice-recognition"
+  ],
   "license": "Apache-2.0",
-  "packageManager": "pnpm@10.28.0"
+  "packageManager": "pnpm@10.28.1",
+  "dependencies": {
+    "dictate-button": "^2.0.1"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "@testing-library/user-event": "^14.6.1",
+    "@types/react": "^19.2.8",
+    "@types/react-dom": "^19.2.3",
+    "happy-dom": "^20.3.4",
+    "jsdom": "^27.4.0",
+    "typescript": "^5.9.3",
+    "vite": "^7.3.1",
+    "vite-plugin-dts": "^4.5.4",
+    "vitest": "^4.0.17"
+  }
 }
