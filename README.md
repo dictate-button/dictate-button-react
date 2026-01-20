@@ -116,7 +116,7 @@ All standard HTML input/textarea props are supported, plus:
 | `buttonSize` | `number` | `30` | Size of the dictate button in pixels |
 | `buttonClassName` | `string` | - | CSS class for the button |
 | `apiEndpoint` | `string` | - | Custom API endpoint for transcription |
-| `language` | `string` | Auto-detected | Language code (e.g., 'en', 'es') |
+| `language` | `string` | `'en'` | Language code (e.g., 'en', 'es', 'fr') |
 | `theme` | `'light' \| 'dark'` | - | Button theme |
 | `onDictateStart` | `() => void` | - | Called when dictation starts |
 | `onDictateText` | `(text: string) => void` | - | Called with interim results |

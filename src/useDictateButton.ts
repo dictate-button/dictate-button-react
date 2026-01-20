@@ -29,7 +29,7 @@ export function useDictateButton(
   const {
     size = 30,
     apiEndpoint,
-    language,
+    language = 'en',
     theme,
     onDictateStart,
     onDictateText,
