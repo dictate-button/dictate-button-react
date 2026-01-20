@@ -22,6 +22,13 @@ Provides a thin integration layer that avoids DOM scanning and mutation, making 
 pnpm add @dictate-button/react
 ```
 
+## Registration Required
+
+**You need to register your app on [dictate-button.io](https://dictate-button.io) to use the `@dictate-button/react` components in your app.**
+
+To do that, visit [dash.dictate-button.io](https://dash.dictate-button.io/auth/register), create a free account and register your site.
+No API key configuration needed - the service works automatically once your site is registered and verified.
+
 ## Quick Start
 
 ```tsx
