@@ -1,8 +1,11 @@
 {
   "name": "@dictate-button/react",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "React text fields with Dictate Button integrated",
+  "author": "Dictate Button Team",
+  "license": "Apache-2.0",
   "type": "module",
+  "sideEffects": false,
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -23,6 +26,14 @@
     "test": "vitest run",
     "test:watch": "vitest"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dictate-button/dictate-button-react.git"
+  },
+  "homepage": "https://github.com/dictate-button/dictate-button-react#readme",
+  "bugs": {
+    "url": "https://github.com/dictate-button/dictate-button-react/issues"
+  },
   "keywords": [
     "react",
     "dictate",
@@ -30,7 +41,6 @@
     "dictate-button",
     "voice-recognition"
   ],
-  "license": "Apache-2.0",
   "dependencies": {
     "dictate-button": "^2.0.1"
   },
