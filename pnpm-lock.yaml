@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       dictate-button:
-        specifier: ^2.0.1
-        version: 2.0.1
+        specifier: ^2.1.1
+        version: 2.1.1
       react:
         specifier: ^19.0.0
         version: 19.2.3
@@ -23,16 +23,16 @@ importers:
         version: 6.9.1
       '@testing-library/react':
         specifier: ^16.3.2
-        version: 16.3.2(@testing-library/dom@10.4.1)(@types/react-dom@19.2.3(@types/react@19.2.8))(@types/react@19.2.8)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+        version: 16.3.2(@testing-library/dom@10.4.1)(@types/react-dom@19.2.3(@types/react@19.2.9))(@types/react@19.2.9)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       '@testing-library/user-event':
         specifier: ^14.6.1
         version: 14.6.1(@testing-library/dom@10.4.1)
       '@types/react':
-        specifier: ^19.2.8
-        version: 19.2.8
+        specifier: ^19.2.9
+        version: 19.2.9
       '@types/react-dom':
         specifier: ^19.2.3
-        version: 19.2.3(@types/react@19.2.8)
+        version: 19.2.3(@types/react@19.2.9)
       happy-dom:
         specifier: ^20.3.4
         version: 20.3.4
@@ -534,8 +534,8 @@ packages:
     peerDependencies:
       '@types/react': ^19.2.0
 
-  '@types/react@19.2.8':
-    resolution: {integrity: sha512-3MbSL37jEchWZz2p2mjntRZtPt837ij10ApxKfgmXCTuHWagYg7iA5bqPw6C8BMPfwidlvfPI/fxOc42HLhcyg==}
+  '@types/react@19.2.9':
+    resolution: {integrity: sha512-Lpo8kgb/igvMIPeNV2rsYKTgaORYdO1XGVZ4Qz3akwOj0ySGYMPlQWa8BaLn0G63D1aSaAQ5ldR06wCpChQCjA==}
 
   '@types/whatwg-mimetype@3.0.2':
     resolution: {integrity: sha512-c2AKvDT8ToxLIOUlN51gTiHXflsfIFisS4pO7pDPoKouJCESkhZnEy623gwP9laCy5lnLDAw1vAzu2vM2YLOrA==}
@@ -719,8 +719,8 @@ packages:
     resolution: {integrity: sha512-0je+qPKHEMohvfRTCEo3CrPG6cAzAYgmzKyxRiYSSDkS6eGJdyVJm7WaYA5ECaAD9wLB2T4EEeymA5aFVcYXCA==}
     engines: {node: '>=6'}
 
-  dictate-button@2.0.1:
-    resolution: {integrity: sha512-ds/WArIS+lsusmzsx99aDN2bPOjowtHU+1K+XTfz+zNKP9IeFKWr5Ntey4XA3ugFg3gcwY5JhFdKO9fxILMl9A==}
+  dictate-button@2.1.1:
+    resolution: {integrity: sha512-ZfisegwPVuu+0wx+mnQx9DSiB3TAIxilJgGsh93rS4KZK/UYFNRScC1kJBWzByauF7569VuUeUeDw9u8G9xM9w==}
 
   diff@8.0.3:
     resolution: {integrity: sha512-qejHi7bcSD4hQAZE0tNAawRK1ZtafHDmMTMkrrIGgSLl7hTnQHmKCeB45xAcbfTqK2zowkM3j3bHt/4b/ARbYQ==}
@@ -1581,15 +1581,15 @@ snapshots:
       picocolors: 1.1.1
       redent: 3.0.0
 
-  '@testing-library/react@16.3.2(@testing-library/dom@10.4.1)(@types/react-dom@19.2.3(@types/react@19.2.8))(@types/react@19.2.8)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)':
+  '@testing-library/react@16.3.2(@testing-library/dom@10.4.1)(@types/react-dom@19.2.3(@types/react@19.2.9))(@types/react@19.2.9)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)':
     dependencies:
       '@babel/runtime': 7.28.6
       '@testing-library/dom': 10.4.1
       react: 19.2.3
       react-dom: 19.2.3(react@19.2.3)
     optionalDependencies:
-      '@types/react': 19.2.8
-      '@types/react-dom': 19.2.3(@types/react@19.2.8)
+      '@types/react': 19.2.9
+      '@types/react-dom': 19.2.3(@types/react@19.2.9)
 
   '@testing-library/user-event@14.6.1(@testing-library/dom@10.4.1)':
     dependencies:
@@ -1612,11 +1612,11 @@ snapshots:
     dependencies:
       undici-types: 7.16.0
 
-  '@types/react-dom@19.2.3(@types/react@19.2.8)':
+  '@types/react-dom@19.2.3(@types/react@19.2.9)':
     dependencies:
-      '@types/react': 19.2.8
+      '@types/react': 19.2.9
 
-  '@types/react@19.2.8':
+  '@types/react@19.2.9':
     dependencies:
       csstype: 3.2.3
 
@@ -1805,7 +1805,7 @@ snapshots:
 
   dequal@2.0.3: {}
 
-  dictate-button@2.0.1:
+  dictate-button@2.1.1:
     dependencies:
       solid-element: 1.9.1(solid-js@1.9.10)
       solid-js: 1.9.10
