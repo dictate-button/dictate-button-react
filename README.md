@@ -4,13 +4,13 @@
 
 React text field components with speech-to-text dictation powered by [Dictate Button](https://github.com/dictate-button/dictate-button).
 
-Provides a thin integration layer that avoids DOM scanning and mutation, making it fully compatible with React, ShadCN, and other modern component libraries.
+Provides a thin integration layer that avoids DOM scanning and mutation, making it fully compatible with React and any CSS framework.
 
 ## Features
 
 - **No DOM Scanning**: Declarative React components instead of inject scripts
 - **No DOM Mutation**: Integrates naturally with React's virtual DOM
-- **ShadCN Compatible**: Works seamlessly with ShadCN's component patterns
+- **Framework Agnostic**: Works with any CSS framework (Tailwind, Bootstrap, etc.)
 - **TypeScript First**: Full type safety and IntelliSense support
 - **React 19 Ready**: Built for modern React
 - **Controlled & Uncontrolled**: Supports both patterns
@@ -65,7 +65,7 @@ This integration layer provides:
 
 - ✅ Declarative React components
 - ✅ No DOM scanning or mutation
-- ✅ Works with ShadCN and other UI libraries
+- ✅ Works with any CSS framework or styling approach
 - ✅ Full TypeScript support
 - ✅ React refs, controlled components, and hooks
 
@@ -170,13 +170,13 @@ All standard HTML input/textarea props are supported, plus:
 | `onDictateEnd` | `(text: string) => void` | - | Called with final transcription |
 | `onDictateError` | `(error: Error \| string) => void` | - | Called on errors |
 
-## ShadCN Integration
+## Styling with Tailwind CSS
 
-These components work perfectly with ShadCN:
+These components accept standard `className` props and work with any CSS framework. Here's an example using Tailwind CSS with the popular `cn()` utility for conditional classes:
 
 ```tsx
 import { DictateInput } from '@dictate-button/react';
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utils'; // clsx + tailwind-merge utility
 
 <DictateInput
   className={cn(
@@ -189,12 +189,14 @@ import { cn } from '@/lib/utils';
 />
 ```
 
+The `cn()` utility is commonly used in Tailwind projects to merge class names. It's not specific to any component library.
+
 ## Examples
 
 See [EXAMPLES.md](./EXAMPLES.md) for comprehensive usage examples including:
 
 - Basic usage
-- ShadCN integration
+- Tailwind CSS styling
 - Controlled components
 - Custom event handlers
 - React Hook Form integration

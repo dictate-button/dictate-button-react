@@ -42,15 +42,15 @@ function MyTextArea() {
 }
 ```
 
-## ShadCN Integration
+## Styling with Tailwind CSS and cn() Utility
 
-These components work seamlessly with ShadCN components by using the same patterns:
+These components accept standard `className` props and work with any CSS framework. Here's an example using Tailwind CSS with the popular `cn()` utility (a combination of clsx and tailwind-merge):
 
 ```tsx
 import { DictateInput, DictateTextarea } from '@dictate-button/react';
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utils'; // clsx + tailwind-merge utility
 
-function ShadCNForm() {
+function StyledForm() {
   return (
     <div className="space-y-4">
       <DictateInput
@@ -78,6 +78,8 @@ function ShadCNForm() {
   );
 }
 ```
+
+Note: The `cn()` utility is commonly used in Tailwind projects to merge class names. It's not specific to any particular component library.
 
 ## Controlled Components
 
@@ -505,6 +507,6 @@ The React integration:
 - No DOM scanning with `querySelectorAll`
 - No direct DOM mutation
 - Fully declarative and React-friendly
-- Works with ShadCN and other component libraries
+- Works with any CSS framework or styling approach
 - Supports refs, controlled components, and React patterns
 - Full TypeScript support
