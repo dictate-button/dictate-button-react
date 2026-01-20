@@ -1,13 +1,18 @@
 import 'dictate-button';
 import React, { forwardRef, useRef } from 'react';
-import { useDictateButton, type UseDictateButtonOptions } from './useDictateButton';
-import type { DictateButtonElement } from './types';
+import { DictateButton } from './DictateButton';
+import { useDictateButtonEventHandlers } from './useDictateButtonEventHandlers';
+import type { DictateButtonProps } from './types';
 
 export interface DictateInputProps
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size'>,
-    UseDictateButtonOptions {
+    Omit<DictateButtonProps, 'class'> {
   buttonSize?: number;
   buttonClassName?: string;
+  onDictateStart?: () => void;
+  onDictateText?: (text: string) => void;
+  onDictateEnd?: (finalText: string) => void;
+  onDictateError?: (error: Error | string) => void;
 }
 
 export const DictateInput = forwardRef<HTMLInputElement, DictateInputProps>(
@@ -18,10 +23,10 @@ export const DictateInput = forwardRef<HTMLInputElement, DictateInputProps>(
       apiEndpoint,
       language,
       theme,
-      onDictateStart,
-      onDictateText,
-      onDictateEnd,
-      onDictateError,
+      onDictateStart: userOnDictateStart,
+      onDictateText: userOnDictateText,
+      onDictateEnd: userOnDictateEnd,
+      onDictateError: userOnDictateError,
       className,
       style,
       ...inputProps
@@ -31,20 +36,15 @@ export const DictateInput = forwardRef<HTMLInputElement, DictateInputProps>(
     const internalInputRef = useRef<HTMLInputElement>(null);
     const inputRef = (forwardedRef as React.RefObject<HTMLInputElement>) || internalInputRef;
 
-    const { buttonRef, wrapperRef } = useDictateButton(inputRef, {
-      size: buttonSize,
-      apiEndpoint,
-      language,
-      theme,
-      onDictateStart,
-      onDictateText,
-      onDictateEnd,
-      onDictateError,
-    });
+    const textHandlers = useDictateButtonEventHandlers(inputRef);
+
+    const handleDictateStart = userOnDictateStart || textHandlers.onDictateStart;
+    const handleDictateText = userOnDictateText || textHandlers.onDictateText;
+    const handleDictateEnd = userOnDictateEnd || textHandlers.onDictateEnd;
+    const handleDictateError = userOnDictateError || textHandlers.onDictateError;
 
     return (
       <div
-        ref={wrapperRef}
         style={{
           position: 'relative',
           display: 'inline-block',
@@ -62,10 +62,16 @@ export const DictateInput = forwardRef<HTMLInputElement, DictateInputProps>(
           }}
           {...inputProps}
         />
-        <dictate-button
-          ref={buttonRef as React.Ref<DictateButtonElement>}
+        <DictateButton
           size={buttonSize}
-          class={buttonClassName}
+          className={buttonClassName}
+          apiEndpoint={apiEndpoint}
+          language={language}
+          theme={theme}
+          onDictateStart={handleDictateStart}
+          onDictateText={handleDictateText}
+          onDictateEnd={handleDictateEnd}
+          onDictateError={handleDictateError}
           style={{
             position: 'absolute',
             right: '4px',

@@ -170,30 +170,277 @@ function ReactHookFormExample() {
 }
 ```
 
-## Advanced: Using the Hook Directly
+## DictateButton Component
 
-For complete control, you can use the `useDictateButton` hook directly:
+The standalone button for custom event handling:
 
 ```tsx
-import { useRef } from 'react';
-import { useDictateButton } from '@dictate-button/react';
+import { useState } from 'react';
+import { DictateButton } from '@dictate-button/react';
 
-function CustomComponent() {
-  const inputRef = useRef<HTMLInputElement>(null);
-  const { buttonRef, wrapperRef } = useDictateButton(inputRef, {
-    size: 30,
-    onDictateEnd: (text) => console.log('Dictated:', text),
+function CustomDictation() {
+  const [transcription, setTranscription] = useState('');
+  const [isRecording, setIsRecording] = useState(false);
+
+  return (
+    <div>
+      <DictateButton
+        size={40}
+        onDictateStart={() => {
+          setIsRecording(true);
+          console.log('Recording started');
+        }}
+        onDictateText={(interimText) => {
+          console.log('Interim:', interimText);
+          setTranscription(interimText);
+        }}
+        onDictateEnd={(finalText) => {
+          setIsRecording(false);
+          console.log('Final:', finalText);
+          setTranscription(finalText);
+        }}
+        onDictateError={(error) => {
+          setIsRecording(false);
+          console.error('Error:', error);
+        }}
+      />
+
+      {isRecording && <p>Recording...</p>}
+      {transcription && <p>Result: {transcription}</p>}
+    </div>
+  );
+}
+```
+
+## Event-Driven Custom Implementations
+
+### Building a Custom Transcription UI
+
+```tsx
+import { useState } from 'react';
+import { DictateButton } from '@dictate-button/react';
+
+function TranscriptionLogger() {
+  const [logs, setLogs] = useState<string[]>([]);
+  const [currentText, setCurrentText] = useState('');
+
+  const addLog = (message: string) => {
+    setLogs((prev) => [...prev, `${new Date().toLocaleTimeString()}: ${message}`]);
+  };
+
+  return (
+    <div>
+      <DictateButton
+        size={50}
+        language="en"
+        theme="dark"
+        onDictateStart={() => {
+          addLog('Dictation started');
+          setCurrentText('');
+        }}
+        onDictateText={(text) => {
+          setCurrentText(text);
+          addLog(`Interim: "${text}"`);
+        }}
+        onDictateEnd={(text) => {
+          addLog(`Final: "${text}"`);
+          setCurrentText(text);
+        }}
+        onDictateError={(error) => {
+          addLog(`Error: ${error}`);
+        }}
+      />
+
+      <div>
+        <h3>Current Transcription:</h3>
+        <p>{currentText || 'Click the button to start'}</p>
+      </div>
+
+      <div>
+        <h3>Event Log:</h3>
+        <ul>
+          {logs.map((log, i) => (
+            <li key={i}>{log}</li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
+}
+```
+
+### Multi-Language Dictation Switcher
+
+```tsx
+import { useState } from 'react';
+import { DictateButton } from '@dictate-button/react';
+
+function MultiLanguageDictation() {
+  const [language, setLanguage] = useState<'en' | 'es' | 'fr'>('en');
+  const [results, setResults] = useState<Record<string, string>>({
+    en: '',
+    es: '',
+    fr: '',
   });
 
   return (
-    <div ref={wrapperRef} style={{ position: 'relative' }}>
+    <div>
+      <div>
+        <label>
+          Language:
+          <select
+            value={language}
+            onChange={(e) => setLanguage(e.target.value as 'en' | 'es' | 'fr')}
+          >
+            <option value="en">English</option>
+            <option value="es">Spanish</option>
+            <option value="fr">French</option>
+          </select>
+        </label>
+
+        <DictateButton
+          language={language}
+          onDictateEnd={(text) => {
+            setResults((prev) => ({
+              ...prev,
+              [language]: text,
+            }));
+          }}
+        />
+      </div>
+
+      <div>
+        <h3>Results:</h3>
+        <p>English: {results.en}</p>
+        <p>Spanish: {results.es}</p>
+        <p>French: {results.fr}</p>
+      </div>
+    </div>
+  );
+}
+```
+
+### Storing Dictation History
+
+```tsx
+import { useState } from 'react';
+import { DictateButton } from '@dictate-button/react';
+
+interface DictationEntry {
+  id: string;
+  text: string;
+  timestamp: Date;
+}
+
+function DictationHistory() {
+  const [history, setHistory] = useState<DictationEntry[]>([]);
+
+  const handleDictateEnd = (text: string) => {
+    const entry: DictationEntry = {
+      id: crypto.randomUUID(),
+      text,
+      timestamp: new Date(),
+    };
+    setHistory((prev) => [entry, ...prev]);
+  };
+
+  return (
+    <div>
+      <div>
+        <h2>Dictate Something</h2>
+        <DictateButton onDictateEnd={handleDictateEnd} />
+      </div>
+
+      <div>
+        <h2>History</h2>
+        {history.length === 0 ? (
+          <p>No dictations yet</p>
+        ) : (
+          <ul>
+            {history.map((entry) => (
+              <li key={entry.id}>
+                <strong>{entry.timestamp.toLocaleString()}</strong>
+                <p>{entry.text}</p>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </div>
+  );
+}
+```
+
+## Advanced: Building Custom Text Field Integrations
+
+For complete control over text field integrations, you can use the `useDictateButtonEventHandlers` hook with the `DictateButton` component:
+
+```tsx
+import { useRef } from 'react';
+import { DictateButton, useDictateButtonEventHandlers } from '@dictate-button/react';
+
+function CustomTextInput() {
+  const inputRef = useRef<HTMLInputElement>(null);
+  const handlers = useDictateButtonEventHandlers(inputRef);
+
+  return (
+    <div style={{ position: 'relative' }}>
+      <input
+        ref={inputRef}
+        type="text"
+        style={{ paddingRight: '40px' }}
+        placeholder="Custom text input with dictation"
+      />
+      <DictateButton
+        {...handlers}
+        size={30}
+        style={{
+          position: 'absolute',
+          right: '8px',
+          top: '50%',
+          transform: 'translateY(-50%)',
+        }}
+      />
+    </div>
+  );
+}
+```
+
+### Extending Event Handlers
+
+You can combine the text insertion handlers with your own custom logic:
+
+```tsx
+import { useRef } from 'react';
+import { DictateButton, useDictateButtonEventHandlers } from '@dictate-button/react';
+
+function CustomTextInputWithLogging() {
+  const inputRef = useRef<HTMLInputElement>(null);
+  const textHandlers = useDictateButtonEventHandlers(inputRef);
+
+  const handleDictateStart = () => {
+    textHandlers.onDictateStart();
+    console.log('User started dictating');
+  };
+
+  const handleDictateEnd = (text: string) => {
+    textHandlers.onDictateEnd(text);
+    console.log('Transcription complete:', text);
+    // Send analytics, save to backend, etc.
+  };
+
+  return (
+    <div style={{ position: 'relative' }}>
       <input
         ref={inputRef}
         type="text"
         style={{ paddingRight: '40px' }}
       />
-      <dictate-button
-        ref={buttonRef}
+      <DictateButton
+        onDictateStart={handleDictateStart}
+        onDictateText={textHandlers.onDictateText}
+        onDictateEnd={handleDictateEnd}
+        onDictateError={textHandlers.onDictateError}
         size={30}
         style={{
           position: 'absolute',
@@ -209,17 +456,26 @@ function CustomComponent() {
 
 ## TypeScript Support
 
-All components are fully typed:
+All components and hooks are fully typed:
 
 ```tsx
 import type {
+  DictateButtonComponentProps,
   DictateInputProps,
   DictateTextareaProps,
-  UseDictateButtonOptions,
+  UseDictateButtonEventHandlersReturn,
   DictateButtonElement,
 } from '@dictate-button/react';
 
-const props: DictateInputProps = {
+const buttonProps: DictateButtonComponentProps = {
+  size: 30,
+  apiEndpoint: 'https://api.example.com',
+  language: 'en',
+  theme: 'light',
+  onDictateEnd: (text: string) => console.log(text),
+};
+
+const inputProps: DictateInputProps = {
   buttonSize: 30,
   apiEndpoint: 'https://api.example.com',
   language: 'en',

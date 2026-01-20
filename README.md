@@ -32,7 +32,7 @@ No API key configuration needed - the service works automatically once your site
 ## Quick Start
 
 ```tsx
-import { DictateInput, DictateTextarea } from '@dictate-button/react';
+import { DictateInput, DictateTextarea, DictateButton } from '@dictate-button/react';
 
 function MyForm() {
   return (
@@ -47,6 +47,10 @@ function MyForm() {
         rows={5}
         placeholder="Or speak here..."
         className="your-textarea-class"
+      />
+
+      <DictateButton
+        onDictateEnd={(text) => console.log('Transcribed:', text)}
       />
     </div>
   );
@@ -93,22 +97,41 @@ A textarea with integrated speech-to-text button.
 />
 ```
 
-### `useDictateButton` Hook
+### `<DictateButton />`
 
-For advanced usage, use the hook directly:
+A standalone dictate button for custom event-based implementations.
+
+```tsx
+<DictateButton
+  size={30}
+  onDictateStart={() => console.log('Started')}
+  onDictateText={(text) => console.log('Interim:', text)}
+  onDictateEnd={(text) => console.log('Final:', text)}
+  onDictateError={(error) => console.error(error)}
+/>
+```
+
+Use this when you want to handle dictation events yourself without automatic text field integration.
+
+### `useDictateButtonEventHandlers` Hook
+
+For building custom text field integrations, use the hook to get text insertion event handlers:
 
 ```tsx
 import { useRef } from 'react';
-import { useDictateButton } from '@dictate-button/react';
+import { DictateButton, useDictateButtonEventHandlers } from '@dictate-button/react';
 
 function CustomInput() {
   const inputRef = useRef<HTMLInputElement>(null);
-  const { buttonRef, wrapperRef } = useDictateButton(inputRef);
+  const handlers = useDictateButtonEventHandlers(inputRef);
 
   return (
-    <div ref={wrapperRef}>
-      <input ref={inputRef} />
-      <dictate-button ref={buttonRef} />
+    <div style={{ position: 'relative' }}>
+      <input ref={inputRef} style={{ paddingRight: '40px' }} />
+      <DictateButton
+        {...handlers}
+        style={{ position: 'absolute', right: '4px', top: '50%', transform: 'translateY(-50%)' }}
+      />
     </div>
   );
 }
@@ -116,12 +139,29 @@ function CustomInput() {
 
 ## Props
 
+### DictateInput & DictateTextarea Props
+
 All standard HTML input/textarea props are supported, plus:
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
 | `buttonSize` | `number` | `30` | Size of the dictate button in pixels |
 | `buttonClassName` | `string` | - | CSS class for the button |
+| `apiEndpoint` | `string` | - | Custom API endpoint for transcription |
+| `language` | `string` | `'en'` | Language code (e.g., 'en', 'es', 'fr') |
+| `theme` | `'light' \| 'dark'` | - | Button theme |
+| `onDictateStart` | `() => void` | - | Called when dictation starts (overrides text insertion if provided) |
+| `onDictateText` | `(text: string) => void` | - | Called with interim results (overrides text insertion if provided) |
+| `onDictateEnd` | `(text: string) => void` | - | Called with final transcription (overrides text insertion if provided) |
+| `onDictateError` | `(error: Error \| string) => void` | - | Called on errors (overrides text insertion if provided) |
+
+### DictateButton Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `size` | `number` | `30` | Size of the button in pixels |
+| `className` | `string` | - | CSS class for the button |
+| `style` | `React.CSSProperties` | - | Inline styles for the button |
 | `apiEndpoint` | `string` | - | Custom API endpoint for transcription |
 | `language` | `string` | `'en'` | Language code (e.g., 'en', 'es', 'fr') |
 | `theme` | `'light' \| 'dark'` | - | Button theme |
@@ -166,9 +206,10 @@ All components and hooks are fully typed. Import types as needed:
 
 ```tsx
 import type {
+  DictateButtonComponentProps,
   DictateInputProps,
   DictateTextareaProps,
-  UseDictateButtonOptions,
+  UseDictateButtonEventHandlersReturn,
 } from '@dictate-button/react';
 ```
 

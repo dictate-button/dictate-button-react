@@ -1,13 +1,18 @@
 import 'dictate-button';
 import React, { forwardRef, useRef } from 'react';
-import { useDictateButton, type UseDictateButtonOptions } from './useDictateButton';
-import type { DictateButtonElement } from './types';
+import { DictateButton } from './DictateButton';
+import { useDictateButtonEventHandlers } from './useDictateButtonEventHandlers';
+import type { DictateButtonProps } from './types';
 
 export interface DictateTextareaProps
   extends Omit<React.TextareaHTMLAttributes<HTMLTextAreaElement>, 'size'>,
-    UseDictateButtonOptions {
+    Omit<DictateButtonProps, 'class'> {
   buttonSize?: number;
   buttonClassName?: string;
+  onDictateStart?: () => void;
+  onDictateText?: (text: string) => void;
+  onDictateEnd?: (finalText: string) => void;
+  onDictateError?: (error: Error | string) => void;
 }
 
 export const DictateTextarea = forwardRef<HTMLTextAreaElement, DictateTextareaProps>(
@@ -18,10 +23,10 @@ export const DictateTextarea = forwardRef<HTMLTextAreaElement, DictateTextareaPr
       apiEndpoint,
       language,
       theme,
-      onDictateStart,
-      onDictateText,
-      onDictateEnd,
-      onDictateError,
+      onDictateStart: userOnDictateStart,
+      onDictateText: userOnDictateText,
+      onDictateEnd: userOnDictateEnd,
+      onDictateError: userOnDictateError,
       className,
       style,
       ...textareaProps
@@ -32,20 +37,15 @@ export const DictateTextarea = forwardRef<HTMLTextAreaElement, DictateTextareaPr
     const textareaRef =
       (forwardedRef as React.RefObject<HTMLTextAreaElement>) || internalTextareaRef;
 
-    const { buttonRef, wrapperRef } = useDictateButton(textareaRef, {
-      size: buttonSize,
-      apiEndpoint,
-      language,
-      theme,
-      onDictateStart,
-      onDictateText,
-      onDictateEnd,
-      onDictateError,
-    });
+    const textHandlers = useDictateButtonEventHandlers(textareaRef);
+
+    const handleDictateStart = userOnDictateStart || textHandlers.onDictateStart;
+    const handleDictateText = userOnDictateText || textHandlers.onDictateText;
+    const handleDictateEnd = userOnDictateEnd || textHandlers.onDictateEnd;
+    const handleDictateError = userOnDictateError || textHandlers.onDictateError;
 
     return (
       <div
-        ref={wrapperRef}
         style={{
           position: 'relative',
           display: 'block',
@@ -63,10 +63,16 @@ export const DictateTextarea = forwardRef<HTMLTextAreaElement, DictateTextareaPr
           }}
           {...textareaProps}
         />
-        <dictate-button
-          ref={buttonRef as React.Ref<DictateButtonElement>}
+        <DictateButton
           size={buttonSize}
-          class={buttonClassName}
+          className={buttonClassName}
+          apiEndpoint={apiEndpoint}
+          language={language}
+          theme={theme}
+          onDictateStart={handleDictateStart}
+          onDictateText={handleDictateText}
+          onDictateEnd={handleDictateEnd}
+          onDictateError={handleDictateError}
           style={{
             position: 'absolute',
             right: '4px',

@@ -1,42 +1,16 @@
 import 'dictate-button';
-import { useEffect, useRef, useCallback } from 'react';
-import type {
-  DictateButtonElement,
-  DictateButtonProps,
-  DictateTextEvent,
-  DictateEndEvent,
-  DictateErrorEvent,
-} from './types';
+import { useRef, useCallback } from 'react';
 
-export interface UseDictateButtonOptions extends Omit<DictateButtonProps, 'class'> {
-  onDictateStart?: () => void;
-  onDictateText?: (text: string) => void;
-  onDictateEnd?: (finalText: string) => void;
-  onDictateError?: (error: Error | string) => void;
+export interface UseDictateButtonEventHandlersReturn {
+  onDictateStart: () => void;
+  onDictateText: (text: string) => void;
+  onDictateEnd: (finalText: string) => void;
+  onDictateError: (error: Error | string) => void;
 }
 
-export interface UseDictateButtonReturn {
-  buttonRef: React.RefObject<DictateButtonElement | null>;
-  wrapperRef: React.RefObject<HTMLDivElement | null>;
-}
-
-export function useDictateButton(
-  inputRef: React.RefObject<HTMLInputElement | HTMLTextAreaElement | null>,
-  options: UseDictateButtonOptions = {}
-): UseDictateButtonReturn {
-  const buttonRef = useRef<DictateButtonElement>(null);
-  const wrapperRef = useRef<HTMLDivElement>(null);
-  const {
-    size = 30,
-    apiEndpoint,
-    language = 'en',
-    theme,
-    onDictateStart,
-    onDictateText,
-    onDictateEnd,
-    onDictateError,
-  } = options;
-
+export function useDictateButtonEventHandlers(
+  inputRef: React.RefObject<HTMLInputElement | HTMLTextAreaElement | null>
+): UseDictateButtonEventHandlersReturn {
   const cursorPositionRef = useRef<number | null>(null);
   const interimLengthRef = useRef<number>(0);
 
@@ -126,22 +100,19 @@ export function useDictateButton(
     []
   );
 
-  useEffect(() => {
-    const button = buttonRef.current;
+  const onDictateStart = useCallback(() => {
     const input = inputRef.current;
+    if (!input) return;
 
-    if (!button || !input) return;
+    cursorPositionRef.current = input.selectionStart ?? input.value.length;
+    interimLengthRef.current = 0;
+    input.focus({ preventScroll: true });
+  }, [inputRef]);
 
-    const handleDictateStart = () => {
-      cursorPositionRef.current = input.selectionStart ?? input.value.length;
-      interimLengthRef.current = 0;
-      input.focus({ preventScroll: true });
-      onDictateStart?.();
-    };
-
-    const handleDictateText = (event: Event) => {
-      const e = event as DictateTextEvent;
-      const text = e.detail;
+  const onDictateText = useCallback(
+    (text: string) => {
+      const input = inputRef.current;
+      if (!input) return;
 
       if (typeof text === 'string' && cursorPositionRef.current !== null) {
         insertInterimText(
@@ -153,13 +124,14 @@ export function useDictateButton(
         interimLengthRef.current =
           text.length + (shouldAddSpaceBefore(input, cursorPositionRef.current) ? 1 : 0);
       }
+    },
+    [inputRef, insertInterimText, shouldAddSpaceBefore]
+  );
 
-      onDictateText?.(text);
-    };
-
-    const handleDictateEnd = (event: Event) => {
-      const e = event as DictateEndEvent;
-      const finalText = e.detail;
+  const onDictateEnd = useCallback(
+    (finalText: string) => {
+      const input = inputRef.current;
+      if (!input) return;
 
       if (cursorPositionRef.current !== null && interimLengthRef.current > 0) {
         clearInterimText(input, cursorPositionRef.current, interimLengthRef.current);
@@ -169,49 +141,26 @@ export function useDictateButton(
       interimLengthRef.current = 0;
 
       insertFinalText(input, finalText);
-      onDictateEnd?.(finalText);
-    };
+    },
+    [inputRef, clearInterimText, insertFinalText]
+  );
 
-    const handleDictateError = (event: Event) => {
-      const e = event as DictateErrorEvent;
+  const onDictateError = useCallback(
+    (_error: Error | string) => {
+      const input = inputRef.current;
+      if (!input) return;
+
       cursorPositionRef.current = null;
       interimLengthRef.current = 0;
       input.focus({ preventScroll: true });
-      onDictateError?.(e.detail);
-    };
+    },
+    [inputRef]
+  );
 
-    button.addEventListener('dictate-start', handleDictateStart);
-    button.addEventListener('dictate-text', handleDictateText);
-    button.addEventListener('dictate-end', handleDictateEnd);
-    button.addEventListener('dictate-error', handleDictateError);
-
-    return () => {
-      button.removeEventListener('dictate-start', handleDictateStart);
-      button.removeEventListener('dictate-text', handleDictateText);
-      button.removeEventListener('dictate-end', handleDictateEnd);
-      button.removeEventListener('dictate-error', handleDictateError);
-    };
-  }, [
-    inputRef,
+  return {
     onDictateStart,
     onDictateText,
     onDictateEnd,
     onDictateError,
-    insertInterimText,
-    insertFinalText,
-    clearInterimText,
-    shouldAddSpaceBefore,
-  ]);
-
-  useEffect(() => {
-    const button = buttonRef.current;
-    if (!button) return;
-
-    if (size !== undefined) button.size = size;
-    if (apiEndpoint !== undefined) button.apiEndpoint = apiEndpoint;
-    if (language !== undefined) button.language = language;
-    if (theme !== undefined) button.theme = theme;
-  }, [size, apiEndpoint, language, theme]);
-
-  return { buttonRef, wrapperRef };
+  };
 }
