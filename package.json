@@ -1,7 +1,7 @@
 {
   "name": "@dictate-button/react",
   "version": "0.0.1",
-  "description": "React text field components with Dictate Button integrated",
+  "description": "React text fields with Dictate Button integrated",
   "type": "module",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
@@ -27,7 +27,6 @@
     "react",
     "dictate",
     "speech-to-text",
-    "shadcn",
     "dictate-button",
     "voice-recognition"
   ],
