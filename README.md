@@ -1,6 +1,6 @@
 # @dictate-button/react
 
-[![Tests](https://github.com/dictate-button/dictate-button-react/actions/workflows/test.yml/badge.svg)](https://github.com/dictate-button/dictate-button-react/actions/workflows/test.yml)
+[![CI](https://github.com/dictate-button/dictate-button-react/actions/workflows/ci.yml/badge.svg)](https://github.com/dictate-button/dictate-button-react/actions/workflows/ci.yml)
 
 React text field components with speech-to-text dictation powered by [Dictate Button](https://github.com/dictate-button/dictate-button).
 
