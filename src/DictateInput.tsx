@@ -1,18 +1,18 @@
-import 'dictate-button';
-import React, { forwardRef, useRef } from 'react';
-import { DictateButton } from './DictateButton';
-import { useDictateButtonEventHandlers } from './useDictateButtonEventHandlers';
-import type { DictateButtonProps } from './types';
+import 'dictate-button'
+import React, { forwardRef, useRef } from 'react'
+import { DictateButton } from './DictateButton'
+import { useDictateButtonEventHandlers } from './useDictateButtonEventHandlers'
+import type { DictateButtonProps } from './types'
 
 export interface DictateInputProps
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size'>,
     Omit<DictateButtonProps, 'class'> {
-  buttonSize?: number;
-  buttonClassName?: string;
-  onDictateStart?: () => void;
-  onDictateText?: (text: string) => void;
-  onDictateEnd?: (finalText: string) => void;
-  onDictateError?: (error: Error | string) => void;
+  buttonSize?: number
+  buttonClassName?: string
+  onDictateStart?: () => void
+  onDictateText?: (text: string) => void
+  onDictateEnd?: (finalText: string) => void
+  onDictateError?: (error: Error | string) => void
 }
 
 export const DictateInput = forwardRef<HTMLInputElement, DictateInputProps>(
@@ -33,15 +33,16 @@ export const DictateInput = forwardRef<HTMLInputElement, DictateInputProps>(
     },
     forwardedRef
   ) => {
-    const internalInputRef = useRef<HTMLInputElement>(null);
-    const inputRef = (forwardedRef as React.RefObject<HTMLInputElement>) || internalInputRef;
+    const internalInputRef = useRef<HTMLInputElement>(null)
+    const inputRef =
+      (forwardedRef as React.RefObject<HTMLInputElement>) || internalInputRef
 
-    const textHandlers = useDictateButtonEventHandlers(inputRef);
+    const textHandlers = useDictateButtonEventHandlers(inputRef)
 
-    const handleDictateStart = userOnDictateStart || textHandlers.onDictateStart;
-    const handleDictateText = userOnDictateText || textHandlers.onDictateText;
-    const handleDictateEnd = userOnDictateEnd || textHandlers.onDictateEnd;
-    const handleDictateError = userOnDictateError || textHandlers.onDictateError;
+    const handleDictateStart = userOnDictateStart || textHandlers.onDictateStart
+    const handleDictateText = userOnDictateText || textHandlers.onDictateText
+    const handleDictateEnd = userOnDictateEnd || textHandlers.onDictateEnd
+    const handleDictateError = userOnDictateError || textHandlers.onDictateError
 
     return (
       <div
@@ -81,8 +82,8 @@ export const DictateInput = forwardRef<HTMLInputElement, DictateInputProps>(
           }}
         />
       </div>
-    );
+    )
   }
-);
+)
 
-DictateInput.displayName = 'DictateInput';
+DictateInput.displayName = 'DictateInput'

@@ -1,21 +1,24 @@
-import 'dictate-button';
-import React, { forwardRef, useRef } from 'react';
-import { DictateButton } from './DictateButton';
-import { useDictateButtonEventHandlers } from './useDictateButtonEventHandlers';
-import type { DictateButtonProps } from './types';
+import 'dictate-button'
+import React, { forwardRef, useRef } from 'react'
+import { DictateButton } from './DictateButton'
+import { useDictateButtonEventHandlers } from './useDictateButtonEventHandlers'
+import type { DictateButtonProps } from './types'
 
 export interface DictateTextareaProps
   extends Omit<React.TextareaHTMLAttributes<HTMLTextAreaElement>, 'size'>,
     Omit<DictateButtonProps, 'class'> {
-  buttonSize?: number;
-  buttonClassName?: string;
-  onDictateStart?: () => void;
-  onDictateText?: (text: string) => void;
-  onDictateEnd?: (finalText: string) => void;
-  onDictateError?: (error: Error | string) => void;
+  buttonSize?: number
+  buttonClassName?: string
+  onDictateStart?: () => void
+  onDictateText?: (text: string) => void
+  onDictateEnd?: (finalText: string) => void
+  onDictateError?: (error: Error | string) => void
 }
 
-export const DictateTextarea = forwardRef<HTMLTextAreaElement, DictateTextareaProps>(
+export const DictateTextarea = forwardRef<
+  HTMLTextAreaElement,
+  DictateTextareaProps
+>(
   (
     {
       buttonSize = 30,
@@ -33,16 +36,17 @@ export const DictateTextarea = forwardRef<HTMLTextAreaElement, DictateTextareaPr
     },
     forwardedRef
   ) => {
-    const internalTextareaRef = useRef<HTMLTextAreaElement>(null);
+    const internalTextareaRef = useRef<HTMLTextAreaElement>(null)
     const textareaRef =
-      (forwardedRef as React.RefObject<HTMLTextAreaElement>) || internalTextareaRef;
+      (forwardedRef as React.RefObject<HTMLTextAreaElement>) ||
+      internalTextareaRef
 
-    const textHandlers = useDictateButtonEventHandlers(textareaRef);
+    const textHandlers = useDictateButtonEventHandlers(textareaRef)
 
-    const handleDictateStart = userOnDictateStart || textHandlers.onDictateStart;
-    const handleDictateText = userOnDictateText || textHandlers.onDictateText;
-    const handleDictateEnd = userOnDictateEnd || textHandlers.onDictateEnd;
-    const handleDictateError = userOnDictateError || textHandlers.onDictateError;
+    const handleDictateStart = userOnDictateStart || textHandlers.onDictateStart
+    const handleDictateText = userOnDictateText || textHandlers.onDictateText
+    const handleDictateEnd = userOnDictateEnd || textHandlers.onDictateEnd
+    const handleDictateError = userOnDictateError || textHandlers.onDictateError
 
     return (
       <div
@@ -81,8 +85,8 @@ export const DictateTextarea = forwardRef<HTMLTextAreaElement, DictateTextareaPr
           }}
         />
       </div>
-    );
+    )
   }
-);
+)
 
-DictateTextarea.displayName = 'DictateTextarea';
+DictateTextarea.displayName = 'DictateTextarea'

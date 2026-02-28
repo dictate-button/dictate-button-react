@@ -1,32 +1,32 @@
 export interface DictateButtonProps {
-  size?: number;
-  apiEndpoint?: string;
-  language?: string;
-  theme?: 'light' | 'dark';
-  class?: string;
+  size?: number
+  apiEndpoint?: string
+  language?: string
+  theme?: 'light' | 'dark'
+  class?: string
 }
 
 export interface DictateButtonElement extends HTMLElement {
-  size?: number;
-  apiEndpoint?: string;
-  language?: string;
-  theme?: 'light' | 'dark';
+  size?: number
+  apiEndpoint?: string
+  language?: string
+  theme?: 'light' | 'dark'
 }
 
 export interface DictateStartEvent extends CustomEvent {
-  detail: void;
+  detail: void
 }
 
 export interface DictateTextEvent extends CustomEvent<string> {
-  detail: string;
+  detail: string
 }
 
 export interface DictateEndEvent extends CustomEvent<string> {
-  detail: string;
+  detail: string
 }
 
 export interface DictateErrorEvent extends CustomEvent {
-  detail: Error | string;
+  detail: Error | string
 }
 
 declare module 'react' {
@@ -35,7 +35,8 @@ declare module 'react' {
       'dictate-button': React.DetailedHTMLProps<
         React.HTMLAttributes<DictateButtonElement>,
         DictateButtonElement
-      > & DictateButtonProps;
+      > &
+        DictateButtonProps
     }
   }
 }

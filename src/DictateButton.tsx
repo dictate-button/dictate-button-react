@@ -1,23 +1,26 @@
-import 'dictate-button';
-import React, { forwardRef, useEffect, useRef } from 'react';
+import 'dictate-button'
+import React, { forwardRef, useEffect, useRef } from 'react'
 import type {
   DictateButtonElement,
   DictateButtonProps,
   DictateTextEvent,
   DictateEndEvent,
   DictateErrorEvent,
-} from './types';
+} from './types'
 
 export interface DictateButtonComponentProps extends DictateButtonProps {
-  className?: string;
-  style?: React.CSSProperties;
-  onDictateStart?: () => void;
-  onDictateText?: (text: string) => void;
-  onDictateEnd?: (finalText: string) => void;
-  onDictateError?: (error: Error | string) => void;
+  className?: string
+  style?: React.CSSProperties
+  onDictateStart?: () => void
+  onDictateText?: (text: string) => void
+  onDictateEnd?: (finalText: string) => void
+  onDictateError?: (error: Error | string) => void
 }
 
-export const DictateButton = forwardRef<DictateButtonElement, DictateButtonComponentProps>(
+export const DictateButton = forwardRef<
+  DictateButtonElement,
+  DictateButtonComponentProps
+>(
   (
     {
       size = 30,
@@ -33,55 +36,56 @@ export const DictateButton = forwardRef<DictateButtonElement, DictateButtonCompo
     },
     forwardedRef
   ) => {
-    const internalButtonRef = useRef<DictateButtonElement>(null);
+    const internalButtonRef = useRef<DictateButtonElement>(null)
     const buttonRef =
-      (forwardedRef as React.RefObject<DictateButtonElement>) || internalButtonRef;
+      (forwardedRef as React.RefObject<DictateButtonElement>) ||
+      internalButtonRef
 
     useEffect(() => {
-      const button = buttonRef.current;
-      if (!button) return;
+      const button = buttonRef.current
+      if (!button) return
 
       const handleDictateStart = () => {
-        onDictateStart?.();
-      };
+        onDictateStart?.()
+      }
 
       const handleDictateText = (event: Event) => {
-        const e = event as DictateTextEvent;
-        onDictateText?.(e.detail);
-      };
+        const e = event as DictateTextEvent
+        onDictateText?.(e.detail)
+      }
 
       const handleDictateEnd = (event: Event) => {
-        const e = event as DictateEndEvent;
-        onDictateEnd?.(e.detail);
-      };
+        const e = event as DictateEndEvent
+        onDictateEnd?.(e.detail)
+      }
 
       const handleDictateError = (event: Event) => {
-        const e = event as DictateErrorEvent;
-        onDictateError?.(e.detail);
-      };
+        const e = event as DictateErrorEvent
+        onDictateError?.(e.detail)
+      }
 
-      button.addEventListener('dictate-start', handleDictateStart);
-      button.addEventListener('dictate-text', handleDictateText);
-      button.addEventListener('dictate-end', handleDictateEnd);
-      button.addEventListener('dictate-error', handleDictateError);
+      button.addEventListener('dictate-start', handleDictateStart)
+      button.addEventListener('dictate-text', handleDictateText)
+      button.addEventListener('dictate-end', handleDictateEnd)
+      button.addEventListener('dictate-error', handleDictateError)
 
       return () => {
-        button.removeEventListener('dictate-start', handleDictateStart);
-        button.removeEventListener('dictate-text', handleDictateText);
-        button.removeEventListener('dictate-end', handleDictateEnd);
-        button.removeEventListener('dictate-error', handleDictateError);
-      };
-    }, [onDictateStart, onDictateText, onDictateEnd, onDictateError]);
+        button.removeEventListener('dictate-start', handleDictateStart)
+        button.removeEventListener('dictate-text', handleDictateText)
+        button.removeEventListener('dictate-end', handleDictateEnd)
+        button.removeEventListener('dictate-error', handleDictateError)
+      }
+    }, [onDictateStart, onDictateText, onDictateEnd, onDictateError])
 
     useEffect(() => {
-      const button = buttonRef.current;
-      if (!button) return;
+      const button = buttonRef.current
+      if (!button) return
 
-      if (size !== undefined) button.size = size;
-      if (apiEndpoint !== undefined) button.apiEndpoint = apiEndpoint;
-      if (language !== undefined) button.language = language;
-      if (theme !== undefined) button.theme = theme;
-    }, [size, apiEndpoint, language, theme]);
+      if (size !== undefined) button.size = size
+      if (apiEndpoint !== undefined) button.apiEndpoint = apiEndpoint
+      if (language !== undefined) button.language = language
+      if (theme !== undefined) button.theme = theme
+    }, [size, apiEndpoint, language, theme])
 
     return (
       <dictate-button
@@ -93,8 +97,8 @@ export const DictateButton = forwardRef<DictateButtonElement, DictateButtonCompo
         class={className}
         style={style}
       />
-    );
+    )
   }
-);
+)
 
-DictateButton.displayName = 'DictateButton';
+DictateButton.displayName = 'DictateButton'
