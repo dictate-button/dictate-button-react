@@ -38,22 +38,19 @@ describe('DictateButton', () => {
   it('sets language prop', () => {
     const { container } = render(<DictateButton language="es" />);
     const button = container.querySelector('dictate-button');
-    // Language is set via property, not attribute
-    expect(button).toBeInTheDocument();
+    expect(button).toHaveAttribute('language', 'es');
   });
 
   it('sets theme prop', () => {
     const { container } = render(<DictateButton theme="dark" />);
     const button = container.querySelector('dictate-button');
-    // Theme is set via property, not attribute
-    expect(button).toBeInTheDocument();
+    expect(button).toHaveAttribute('theme', 'dark');
   });
 
   it('sets apiEndpoint prop', () => {
     const { container } = render(<DictateButton apiEndpoint="https://api.example.com" />);
     const button = container.querySelector('dictate-button');
-    // API endpoint is set via property, not attribute
-    expect(button).toBeInTheDocument();
+    expect(button).toHaveAttribute('apiEndpoint', 'https://api.example.com');
   });
 
   it('forwards ref correctly', () => {
@@ -124,6 +121,9 @@ describe('DictateButton', () => {
     const button = container.querySelector('dictate-button');
     expect(button).toBeInTheDocument();
     expect(button).toHaveAttribute('size', '40');
+    expect(button).toHaveAttribute('language', 'fr');
+    expect(button).toHaveAttribute('theme', 'light');
+    expect(button).toHaveAttribute('apiEndpoint', 'https://custom.api.com');
     expect(button).toHaveClass('btn-custom');
     expect(button).toHaveStyle({ margin: '10px' });
   });

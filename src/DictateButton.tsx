@@ -87,6 +87,9 @@ export const DictateButton = forwardRef<DictateButtonElement, DictateButtonCompo
       <dictate-button
         ref={buttonRef as React.Ref<DictateButtonElement>}
         size={size}
+        apiEndpoint={apiEndpoint}
+        language={language}
+        theme={theme}
         class={className}
         style={style}
       />
