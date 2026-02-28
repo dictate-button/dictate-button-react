@@ -1,5 +1,6 @@
 # @dictate-button/react
 
+[![NPM Version](https://img.shields.io/npm/v/@dictate-button/react)](https://www.npmjs.com/package/@dictate-button/react)
 [![CI](https://github.com/dictate-button/dictate-button-react/actions/workflows/ci.yml/badge.svg)](https://github.com/dictate-button/dictate-button-react/actions/workflows/ci.yml)
 
 React text field components with speech-to-text dictation powered by [Dictate Button](https://github.com/dictate-button/dictate-button).
