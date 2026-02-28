@@ -1,11 +1,12 @@
 import 'dictate-button'
-import React, { forwardRef, useEffect, useRef } from 'react'
+import type React from 'react'
+import { forwardRef, useEffect, useRef } from 'react'
 import type {
   DictateButtonElement,
   DictateButtonProps,
-  DictateTextEvent,
   DictateEndEvent,
   DictateErrorEvent,
+  DictateTextEvent,
 } from './types'
 
 export interface DictateButtonComponentProps extends DictateButtonProps {
@@ -14,7 +15,7 @@ export interface DictateButtonComponentProps extends DictateButtonProps {
   onDictateStart?: () => void
   onDictateText?: (text: string) => void
   onDictateEnd?: (finalText: string) => void
-  onDictateError?: (error: Error | string) => void
+  onDictateError?: (error: string) => void
 }
 
 export const DictateButton = forwardRef<
@@ -75,7 +76,7 @@ export const DictateButton = forwardRef<
         button.removeEventListener('dictate-end', handleDictateEnd)
         button.removeEventListener('dictate-error', handleDictateError)
       }
-    }, [onDictateStart, onDictateText, onDictateEnd, onDictateError])
+    }, [buttonRef, onDictateStart, onDictateText, onDictateEnd, onDictateError])
 
     useEffect(() => {
       const button = buttonRef.current
@@ -85,7 +86,7 @@ export const DictateButton = forwardRef<
       if (apiEndpoint !== undefined) button.apiEndpoint = apiEndpoint
       if (language !== undefined) button.language = language
       if (theme !== undefined) button.theme = theme
-    }, [size, apiEndpoint, language, theme])
+    }, [buttonRef, size, apiEndpoint, language, theme])
 
     return (
       <dictate-button

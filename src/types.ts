@@ -13,8 +13,8 @@ export interface DictateButtonElement extends HTMLElement {
   theme?: 'light' | 'dark'
 }
 
-export interface DictateStartEvent extends CustomEvent {
-  detail: void
+export interface DictateStartEvent extends CustomEvent<string> {
+  detail: string
 }
 
 export interface DictateTextEvent extends CustomEvent<string> {
@@ -25,8 +25,8 @@ export interface DictateEndEvent extends CustomEvent<string> {
   detail: string
 }
 
-export interface DictateErrorEvent extends CustomEvent {
-  detail: Error | string
+export interface DictateErrorEvent extends CustomEvent<string> {
+  detail: string
 }
 
 declare module 'react' {

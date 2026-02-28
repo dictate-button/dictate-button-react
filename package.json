@@ -26,7 +26,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "format": "biome format --write .",
-    "lint": "biome lint ."
+    "lint": "biome lint .",
+    "check": "biome check ."
   },
   "repository": {
     "type": "git",

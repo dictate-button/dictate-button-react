@@ -1,8 +1,9 @@
 import 'dictate-button'
-import React, { forwardRef, useRef } from 'react'
+import type React from 'react'
+import { forwardRef, useRef } from 'react'
 import { DictateButton } from './DictateButton'
-import { useDictateButtonEventHandlers } from './useDictateButtonEventHandlers'
 import type { DictateButtonProps } from './types'
+import { useDictateButtonEventHandlers } from './useDictateButtonEventHandlers'
 
 export interface DictateInputProps
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size'>,
@@ -12,7 +13,7 @@ export interface DictateInputProps
   onDictateStart?: () => void
   onDictateText?: (text: string) => void
   onDictateEnd?: (finalText: string) => void
-  onDictateError?: (error: Error | string) => void
+  onDictateError?: (error: string) => void
 }
 
 export const DictateInput = forwardRef<HTMLInputElement, DictateInputProps>(

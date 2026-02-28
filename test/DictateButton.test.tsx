@@ -1,5 +1,5 @@
-import { describe, it, expect, vi } from 'vitest'
 import { render } from '@testing-library/react'
+import { describe, expect, it, vi } from 'vitest'
 import { DictateButton } from '../src/DictateButton'
 
 describe('DictateButton', () => {
@@ -49,10 +49,10 @@ describe('DictateButton', () => {
 
   it('sets apiEndpoint prop', () => {
     const { container } = render(
-      <DictateButton apiEndpoint="https://api.example.com" />
+      <DictateButton apiEndpoint="wss://api.example.com" />
     )
     const button = container.querySelector('dictate-button')
-    expect(button).toHaveAttribute('apiEndpoint', 'https://api.example.com')
+    expect(button).toHaveAttribute('apiEndpoint', 'wss://api.example.com')
   })
 
   it('forwards ref correctly', () => {
@@ -113,7 +113,7 @@ describe('DictateButton', () => {
         size={40}
         language="fr"
         theme="light"
-        apiEndpoint="https://custom.api.com"
+        apiEndpoint="wss://custom.api.com"
         className="btn-custom"
         style={{ margin: '10px' }}
         onDictateEnd={() => {}}
@@ -125,7 +125,7 @@ describe('DictateButton', () => {
     expect(button).toHaveAttribute('size', '40')
     expect(button).toHaveAttribute('language', 'fr')
     expect(button).toHaveAttribute('theme', 'light')
-    expect(button).toHaveAttribute('apiEndpoint', 'https://custom.api.com')
+    expect(button).toHaveAttribute('apiEndpoint', 'wss://custom.api.com')
     expect(button).toHaveClass('btn-custom')
     expect(button).toHaveStyle({ margin: '10px' })
   })

@@ -1,8 +1,9 @@
 import 'dictate-button'
-import React, { forwardRef, useRef } from 'react'
+import type React from 'react'
+import { forwardRef, useRef } from 'react'
 import { DictateButton } from './DictateButton'
-import { useDictateButtonEventHandlers } from './useDictateButtonEventHandlers'
 import type { DictateButtonProps } from './types'
+import { useDictateButtonEventHandlers } from './useDictateButtonEventHandlers'
 
 export interface DictateTextareaProps
   extends Omit<React.TextareaHTMLAttributes<HTMLTextAreaElement>, 'size'>,
@@ -12,7 +13,7 @@ export interface DictateTextareaProps
   onDictateStart?: () => void
   onDictateText?: (text: string) => void
   onDictateEnd?: (finalText: string) => void
-  onDictateError?: (error: Error | string) => void
+  onDictateError?: (error: string) => void
 }
 
 export const DictateTextarea = forwardRef<

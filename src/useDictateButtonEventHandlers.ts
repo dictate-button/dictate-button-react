@@ -1,11 +1,11 @@
 import 'dictate-button'
-import { useRef, useCallback } from 'react'
+import { useCallback, useRef } from 'react'
 
 export interface UseDictateButtonEventHandlersReturn {
   onDictateStart: () => void
   onDictateText: (text: string) => void
   onDictateEnd: (finalText: string) => void
-  onDictateError: (error: Error | string) => void
+  onDictateError: (error: string) => void
 }
 
 export function useDictateButtonEventHandlers(
@@ -163,7 +163,7 @@ export function useDictateButtonEventHandlers(
   )
 
   const onDictateError = useCallback(
-    (_error: Error | string) => {
+    (_error: string) => {
       const input = inputRef.current
       if (!input) return
 
