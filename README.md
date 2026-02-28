@@ -227,6 +227,15 @@ pnpm test
 # Type checking
 pnpm typecheck
 
+# Lint and format check (Biome)
+pnpm check
+
+# Auto-fix formatting
+pnpm format
+
+# Lint only
+pnpm lint
+
 # Watch mode for development
 pnpm dev
 ```
